@@ -1,7 +1,8 @@
 import pandas as pd
 import joblib
 
-from sklearn.model_selection import train_test_split
+from sklearn.model_selection import train_test_split, StratifiedKFold, cross_validate
+from sklearn.pipeline import Pipeline
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import (
@@ -62,49 +63,85 @@ print(f"Training samples: {len(X_train)}")
 print(f"Testing samples: {len(X_test)}")
 
 
-# 5. Convert text into TF-IDF features
-vectorizer = TfidfVectorizer(
-    lowercase=True,
-    stop_words="english",
-    ngram_range=(1, 2),
-    max_features=10000,
-    min_df=2
-)
+# 5. Build ML pipeline
+# TF-IDF is fitted separately inside each cross-validation fold.
+pipeline = Pipeline([
+    (
+        "tfidf",
+        TfidfVectorizer(
+            lowercase=True,
+            stop_words="english",
+            ngram_range=(1, 2),
+            max_features=10000,
+            min_df=2
+        )
+    ),
+    (
+        "classifier",
+        LogisticRegression(
+            max_iter=1000,
+            random_state=42
+        )
+    )
+])
 
-X_train_tfidf = vectorizer.fit_transform(X_train)
-X_test_tfidf = vectorizer.transform(X_test)
 
-
-print(f"TF-IDF training shape: {X_train_tfidf.shape}")
-
-
-# 6. Train Logistic Regression model
-model = LogisticRegression(
-    max_iter=1000,
+# 6. 5-fold stratified cross-validation
+cv = StratifiedKFold(
+    n_splits=5,
+    shuffle=True,
     random_state=42
 )
 
-model.fit(X_train_tfidf, y_train)
+cv_results = cross_validate(
+    pipeline,
+    X_train,
+    y_train,
+    cv=cv,
+    scoring=[
+        "accuracy",
+        "precision",
+        "recall",
+        "f1"
+    ]
+)
 
 
-# 7. Make predictions
-y_pred = model.predict(X_test_tfidf)
+print("\n===== 5-FOLD CROSS-VALIDATION =====")
+
+for metric in ["accuracy", "precision", "recall", "f1"]:
+    scores = cv_results[f"test_{metric}"]
+
+    print(
+        f"{metric.capitalize():9s}: "
+        f"{scores.mean():.4f} ± {scores.std():.4f}"
+    )
 
 
-# 8. Evaluate model
+# 7. Train final model on complete training set
+pipeline.fit(X_train, y_train)
+
+
+# 8. Make predictions on untouched test set
+y_pred = pipeline.predict(X_test)
+
+
+# 9. Evaluate final model
 accuracy = accuracy_score(y_test, y_pred)
 precision = precision_score(y_test, y_pred)
 recall = recall_score(y_test, y_pred)
 f1 = f1_score(y_test, y_pred)
 
-print("\n===== MODEL EVALUATION =====")
+print("\n===== FINAL MODEL EVALUATION =====")
 print(f"Accuracy : {accuracy:.4f}")
 print(f"Precision: {precision:.4f}")
 print(f"Recall   : {recall:.4f}")
 print(f"F1 Score : {f1:.4f}")
 
+
 print("\n===== CONFUSION MATRIX =====")
 print(confusion_matrix(y_test, y_pred))
+
 
 print("\n===== CLASSIFICATION REPORT =====")
 print(
@@ -116,12 +153,16 @@ print(
 )
 
 
-# 9. Save model and vectorizer
+# 10. Save TF-IDF vectorizer and model separately
+vectorizer = pipeline.named_steps["tfidf"]
+model = pipeline.named_steps["classifier"]
+
 MODEL_PATH = "models/text_classifier.joblib"
 VECTORIZER_PATH = "models/tfidf_vectorizer.joblib"
 
 joblib.dump(model, MODEL_PATH)
 joblib.dump(vectorizer, VECTORIZER_PATH)
+
 
 print("\n===== SAVED =====")
 print(f"Model     : {MODEL_PATH}")
