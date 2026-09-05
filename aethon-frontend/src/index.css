@@ -1,0 +1,305 @@
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+@import "tailwindcss";
+
+/* ===== AETHON AI Design Tokens (§3) ===== */
+:root {
+  /* Backgrounds */
+  --bg-base: #0A0E14;
+  --bg-surface: #121826;
+  --bg-surface-2: #1A2233;
+
+  /* Borders */
+  --border-subtle: #232B3D;
+  --border-strong: #34405A;
+
+  /* Text */
+  --text-primary: #E7ECF5;
+  --text-secondary: #9AA7BD;
+  --text-muted: #5E6B85;
+
+  /* Accent (interactive — never for severity) */
+  --accent-signal: #3FD0C9;
+  --accent-signal-dim: #1F6E68;
+
+  /* Risk / Severity scale */
+  --risk-critical: #E5484D;
+  --risk-high: #F2994A;
+  --risk-medium: #E0B341;
+  --risk-low: #3FBF7F;
+  --risk-info: #5E8CE0;
+
+  /* Layout */
+  --topbar-height: 56px;
+  --sidebar-width: 220px;
+  --sidebar-collapsed: 64px;
+
+  /* Typography */
+  --font-ui: 'Inter', 'IBM Plex Sans', system-ui, sans-serif;
+  --font-heading: 'IBM Plex Sans', 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', 'IBM Plex Mono', 'Fira Code', monospace;
+
+  /* Radius */
+  --radius: 8px;
+  --radius-sm: 4px;
+  --radius-lg: 12px;
+}
+
+/* ===== Base Reset & Globals ===== */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 14px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-ui);
+  background-color: var(--bg-base);
+  color: var(--text-primary);
+  line-height: 1.5;
+  min-height: 100vh;
+}
+
+code, pre, .font-mono {
+  font-family: var(--font-mono);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  font-weight: 600;
+}
+
+/* ===== Focus Ring (§10 — Accessibility) ===== */
+:focus-visible {
+  outline: 2px solid var(--accent-signal);
+  outline-offset: 2px;
+}
+
+/* ===== Reduced Motion (§10) ===== */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ===== Scrollbar Styling ===== */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-base);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border-strong);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-muted);
+}
+
+/* ===== Utility Classes ===== */
+.surface {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius);
+}
+
+.surface-2 {
+  background-color: var(--bg-surface-2);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius);
+}
+
+.text-secondary {
+  color: var(--text-secondary);
+}
+
+.text-muted {
+  color: var(--text-muted);
+}
+
+/* Severity chips */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 10px;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  text-transform: capitalize;
+}
+
+.chip-critical {
+  background-color: rgba(229, 72, 77, 0.15);
+  color: var(--risk-critical);
+}
+
+.chip-high {
+  background-color: rgba(242, 153, 74, 0.15);
+  color: var(--risk-high);
+}
+
+.chip-medium {
+  background-color: rgba(224, 179, 65, 0.15);
+  color: var(--risk-medium);
+}
+
+.chip-low {
+  background-color: rgba(63, 191, 127, 0.15);
+  color: var(--risk-low);
+}
+
+.chip-info {
+  background-color: rgba(94, 140, 224, 0.15);
+  color: var(--risk-info);
+}
+
+/* Status chips */
+.chip-open {
+  background-color: rgba(94, 140, 224, 0.15);
+  color: var(--risk-info);
+}
+
+.chip-needs-review {
+  background-color: rgba(224, 179, 65, 0.15);
+  color: var(--risk-medium);
+}
+
+.chip-confirmed {
+  background-color: rgba(229, 72, 77, 0.15);
+  color: var(--risk-critical);
+}
+
+.chip-closed {
+  background-color: rgba(94, 107, 133, 0.15);
+  color: var(--text-muted);
+}
+
+/* Severity left border for table rows */
+.severity-border-critical { border-left: 2px solid var(--risk-critical); }
+.severity-border-high { border-left: 2px solid var(--risk-high); }
+.severity-border-medium { border-left: 2px solid var(--risk-medium); }
+.severity-border-low { border-left: 2px solid var(--risk-low); }
+
+/* Button styles */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border-radius: var(--radius);
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  border: 1px solid transparent;
+  font-family: var(--font-ui);
+}
+
+.btn-primary {
+  background-color: var(--accent-signal);
+  color: var(--bg-base);
+}
+
+.btn-primary:hover {
+  background-color: #4de0d9;
+}
+
+.btn-ghost {
+  background-color: transparent;
+  color: var(--text-primary);
+  border-color: var(--border-subtle);
+}
+
+.btn-ghost:hover {
+  background-color: var(--bg-surface-2);
+  border-color: var(--border-strong);
+}
+
+.btn-danger {
+  background-color: transparent;
+  color: var(--risk-critical);
+  border-color: var(--risk-critical);
+}
+
+.btn-danger:hover {
+  background-color: rgba(229, 72, 77, 0.1);
+}
+
+.btn-success {
+  background-color: transparent;
+  color: var(--risk-low);
+  border-color: var(--risk-low);
+}
+
+.btn-success:hover {
+  background-color: rgba(63, 191, 127, 0.1);
+}
+
+.btn-warning {
+  background-color: transparent;
+  color: var(--risk-medium);
+  border-color: var(--risk-medium);
+}
+
+.btn-warning:hover {
+  background-color: rgba(224, 179, 65, 0.1);
+}
+
+/* Input styles */
+.input {
+  width: 100%;
+  padding: 10px 12px;
+  background-color: var(--bg-surface-2);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius);
+  color: var(--text-primary);
+  font-family: var(--font-ui);
+  font-size: 0.875rem;
+  transition: border-color 0.15s ease;
+}
+
+.input:focus {
+  outline: none;
+  border-color: var(--accent-signal);
+}
+
+.input::placeholder {
+  color: var(--text-muted);
+}
+
+.input-mono {
+  font-family: var(--font-mono);
+}
+
+/* Card */
+.card {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius);
+  padding: 20px;
+}
+
+.card-hover:hover {
+  border-color: var(--border-strong);
+  cursor: pointer;
+}
+
+

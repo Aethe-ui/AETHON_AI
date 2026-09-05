@@ -1,0 +1,31 @@
+{
+  "query": "185.220.101.34",
+  "queryType": "ip",
+  "reputationScore": 87,
+  "classification": "Malicious",
+  "threatType": "Known Tor Exit Node / Proxy",
+  "firstSeen": "2023-06-15",
+  "lastSeen": "2024-01-14",
+  "tags": ["tor-exit", "proxy", "scanner"],
+  "network": {
+    "asn": "AS24940 - Hetzner Online GmbH",
+    "country": "Germany",
+    "city": "Nuremberg",
+    "organization": "Hetzner Online GmbH",
+    "cidr": "185.220.101.0/24"
+  },
+  "detectionStats": {
+    "detected": 34,
+    "total": 67,
+    "categories": [
+      { "name": "Tor Exit Node", "count": 28 },
+      { "name": "Malware C2", "count": 4 },
+      { "name": "Scanner", "count": 2 }
+    ]
+  },
+  "relatedCases": [
+    { "caseId": "AE-042", "severity": "critical", "classification": "Phishing", "date": "2024-01-15" },
+    { "caseId": "AE-038", "severity": "high", "classification": "BEC", "date": "2024-01-13" },
+    { "caseId": "AE-029", "severity": "medium", "classification": "Malware delivery", "date": "2024-01-08" }
+  ]
+}

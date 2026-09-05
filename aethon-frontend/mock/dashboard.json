@@ -1,0 +1,36 @@
+{
+  "stats": {
+    "emailsAnalyzed": 12847,
+    "emailsTrend": 12,
+    "threatsDetected": 1243,
+    "threatsTrend": 8,
+    "criticalThreats": 47,
+    "criticalTrend": 3,
+    "openCases": 23,
+    "openCasesTrend": -2
+  },
+  "trend": [
+    { "date": "Dec 17", "count": 28 }, { "date": "Dec 18", "count": 35 },
+    { "date": "Dec 19", "count": 22 }, { "date": "Dec 20", "count": 41 },
+    { "date": "Dec 21", "count": 38 }, { "date": "Dec 22", "count": 19 },
+    { "date": "Dec 23", "count": 15 }, { "date": "Dec 24", "count": 32 },
+    { "date": "Dec 25", "count": 45 }, { "date": "Dec 26", "count": 52 },
+    { "date": "Dec 27", "count": 37 }, { "date": "Dec 28", "count": 44 },
+    { "date": "Dec 29", "count": 29 }, { "date": "Dec 30", "count": 55 },
+    { "date": "Dec 31", "count": 48 }, { "date": "Jan 01", "count": 33 },
+    { "date": "Jan 02", "count": 61 }, { "date": "Jan 03", "count": 42 },
+    { "date": "Jan 04", "count": 38 }, { "date": "Jan 05", "count": 50 },
+    { "date": "Jan 06", "count": 57 }, { "date": "Jan 07", "count": 43 },
+    { "date": "Jan 08", "count": 39 }, { "date": "Jan 09", "count": 46 },
+    { "date": "Jan 10", "count": 52 }, { "date": "Jan 11", "count": 48 },
+    { "date": "Jan 12", "count": 55 }, { "date": "Jan 13", "count": 63 },
+    { "date": "Jan 14", "count": 58 }, { "date": "Jan 15", "count": 67 }
+  ],
+  "categories": [
+    { "category": "Phishing", "count": 558, "percentage": 45 },
+    { "category": "Malware", "count": 311, "percentage": 25 },
+    { "category": "BEC", "count": 186, "percentage": 15 },
+    { "category": "Credential Harvesting", "count": 124, "percentage": 10 },
+    { "category": "Other", "count": 64, "percentage": 5 }
+  ]
+}

@@ -1,0 +1,49 @@
+{
+  "caseId": "AE-042",
+  "subject": "PayPal account verification required",
+  "status": "open",
+  "severity": "critical",
+  "riskScore": 92,
+  "confidence": 0.96,
+  "classification": "Phishing",
+  "createdAt": "2024-01-15T09:23:00Z",
+  "analyst": "Sarah Chen",
+  "explanation": [
+    { "signal": "Sender domain registered 48 hours ago", "weight": "high" },
+    { "signal": "URL redirects through 3 shorteners before landing page", "weight": "high" },
+    { "signal": "92% visual similarity to paypal.com login page", "weight": "high" },
+    { "signal": "SPF authentication failed for declared sender", "weight": "medium" },
+    { "signal": "Email sent outside normal business hours", "weight": "low" }
+  ],
+  "authentication": { "spf": "fail", "dkim": "pass", "dmarc": "fail" },
+  "receivedPath": [
+    { "hop": 1, "ip": "185.220.101.34", "server": "mail-out.paypa1-verify.com", "geo": { "country": "Romania", "city": "Bucharest", "confidence": "medium", "accuracyRadiusKm": 50 }},
+    { "hop": 2, "ip": "91.189.114.8", "server": "relay.suspicious-host.net", "geo": { "country": "Germany", "city": "Frankfurt", "confidence": "high", "accuracyRadiusKm": 20 }},
+    { "hop": 3, "ip": "10.0.1.25", "server": "mx.company.com", "geo": { "country": "United States", "city": "San Francisco", "confidence": "high", "accuracyRadiusKm": 10 }}
+  ],
+  "indicators": {
+    "domains": [
+      { "value": "paypa1-verify.com", "risk": "critical", "note": "Domain age: 2 days, Registrar: NameCheap, 92% similarity to paypal.com" }
+    ],
+    "urls": [
+      { "value": "https://bit.ly/3xK9mPq → paypa1-verify.com/login", "risk": "critical", "note": "3-hop redirect chain, final destination flagged by 12/67 vendors" }
+    ],
+    "ips": [
+      { "value": "185.220.101.34", "risk": "high", "note": "Known Tor exit node, Hetzner AS24940" }
+    ],
+    "attachments": [
+      { "value": "No attachments detected", "risk": "low" }
+    ]
+  },
+  "timeline": [
+    { "time": "2024-01-15T09:23:00Z", "event": "Email received by target mailbox" },
+    { "time": "2024-01-15T09:24:00Z", "event": "Auto-forwarded to AETHON for analysis" },
+    { "time": "2024-01-15T09:24:15Z", "event": "Analysis started — email parsing" },
+    { "time": "2024-01-15T09:24:45Z", "event": "Header analysis complete — SPF fail, DMARC fail" },
+    { "time": "2024-01-15T09:25:10Z", "event": "AI classification: Phishing (Critical, 92/100)" },
+    { "time": "2024-01-15T09:25:12Z", "event": "Case AE-042 created and assigned to Sarah Chen" }
+  ],
+  "notes": [
+    { "author": "Sarah Chen", "text": "Confirmed phishing campaign targeting finance team. Similar emails detected from same sender infrastructure. Blocking domain at gateway.", "createdAt": "2024-01-15T10:15:00Z" }
+  ]
+}

@@ -1,0 +1,10 @@
+[
+  { "caseId": "AE-042", "subject": "PayPal account verification required", "severity": "critical", "status": "open", "analyst": "Sarah Chen", "createdAt": "2024-01-15T09:23:00Z" },
+  { "caseId": "AE-041", "subject": "Invoice #38291 attached", "severity": "high", "status": "needs_review", "analyst": null, "createdAt": "2024-01-15T08:14:00Z" },
+  { "caseId": "AE-040", "subject": "Microsoft 365 password expiry notice", "severity": "critical", "status": "confirmed", "analyst": "James Wilson", "createdAt": "2024-01-14T15:32:00Z" },
+  { "caseId": "AE-039", "subject": "Quarterly report Q4 2023", "severity": "low", "status": "closed", "analyst": "Sarah Chen", "createdAt": "2024-01-14T11:05:00Z" },
+  { "caseId": "AE-038", "subject": "Urgent wire transfer request from CEO", "severity": "high", "status": "open", "analyst": "Maria Lopez", "createdAt": "2024-01-13T16:48:00Z" },
+  { "caseId": "AE-037", "subject": "DocuSign: Document ready for signature", "severity": "medium", "status": "needs_review", "analyst": null, "createdAt": "2024-01-13T10:22:00Z" },
+  { "caseId": "AE-036", "subject": "IT Support: Your VPN credentials", "severity": "high", "status": "confirmed", "analyst": "James Wilson", "createdAt": "2024-01-12T14:15:00Z" },
+  { "caseId": "AE-035", "subject": "Benefits enrollment update — action required", "severity": "low", "status": "closed", "analyst": "Sarah Chen", "createdAt": "2024-01-12T09:33:00Z" }
+]
