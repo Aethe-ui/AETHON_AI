@@ -1,0 +1,103 @@
+{
+  "caseId": "AE-042",
+  "subject": "Urgent: Verify your PayPal account — action required",
+  "status": "open",
+  "severity": "critical",
+  "riskScore": 94,
+  "confidence": 0.97,
+  "classification": "Credential Phishing",
+  "createdAt": "2026-09-05T06:14:22.000Z",
+  "analyst": "S. Kapoor",
+  "senderEmail": "security-alerts@paypa1-secure.ru",
+  "senderDomain": "paypa1-secure.ru",
+  "explanation": [
+    { "signal": "Domain registered 3 days ago (paypa1-secure.ru)", "weight": "high" },
+    { "signal": "92% visual similarity to paypal.com login page", "weight": "high" },
+    { "signal": "SPF and DMARC authentication both failed", "weight": "high" },
+    { "signal": "Homoglyph substitution: '1' for 'l' in domain name", "weight": "medium" },
+    { "signal": "Originating IP 185.220.101.47 listed on 3 threat feeds", "weight": "high" },
+    { "signal": "Attachment invoice.pdf contains embedded macro", "weight": "medium" }
+  ],
+  "authentication": {
+    "spf": "fail",
+    "dkim": "fail",
+    "dmarc": "fail"
+  },
+  "receivedPath": [
+    {
+      "hop": 1,
+      "ip": "185.220.101.47",
+      "server": "mail.paypa1-secure.ru",
+      "geo": {
+        "country": "Russia",
+        "city": "Moscow",
+        "confidence": "medium",
+        "accuracyRadiusKm": 250,
+        "lat": 55.7558,
+        "lon": 37.6173
+      }
+    },
+    {
+      "hop": 2,
+      "ip": "91.108.4.22",
+      "server": "relay.smtp-anon.net",
+      "geo": {
+        "country": "Netherlands",
+        "city": "Amsterdam",
+        "confidence": "high",
+        "accuracyRadiusKm": 50,
+        "lat": 52.3676,
+        "lon": 4.9041
+      }
+    },
+    {
+      "hop": 3,
+      "ip": "209.85.220.41",
+      "server": "smtp.gmail.com",
+      "geo": {
+        "country": "United States",
+        "city": "Mountain View",
+        "confidence": "high",
+        "accuracyRadiusKm": 20,
+        "lat": 37.3861,
+        "lon": -122.0839
+      }
+    }
+  ],
+  "indicators": {
+    "domains": [
+      { "value": "paypa1-secure.ru", "risk": "critical", "note": "Typosquat of paypal.com, 3-day-old domain" },
+      { "value": "secure-login-verify.com", "risk": "high", "note": "Redirect target URL host" }
+    ],
+    "urls": [
+      { "value": "https://paypa1-secure.ru/login/verify?token=abc123", "risk": "critical" },
+      { "value": "https://secure-login-verify.com/capture", "risk": "high" }
+    ],
+    "ips": [
+      { "value": "185.220.101.47", "risk": "critical" },
+      { "value": "91.108.4.22", "risk": "medium" }
+    ],
+    "attachments": [
+      { "value": "invoice.pdf", "risk": "high" }
+    ]
+  },
+  "timeline": [
+    { "time": "2026-09-05T06:10:00.000Z", "event": "Email received by mail gateway" },
+    { "time": "2026-09-05T06:10:05.000Z", "event": "SPF check performed — result: FAIL" },
+    { "time": "2026-09-05T06:10:06.000Z", "event": "DKIM verification — result: FAIL" },
+    { "time": "2026-09-05T06:10:07.000Z", "event": "DMARC policy check — result: FAIL (quarantine)" },
+    { "time": "2026-09-05T06:10:12.000Z", "event": "URL sandbox detonation started" },
+    { "time": "2026-09-05T06:10:55.000Z", "event": "Credential harvest page detected at paypa1-secure.ru" },
+    { "time": "2026-09-05T06:11:10.000Z", "event": "Attachment invoice.pdf submitted for analysis" },
+    { "time": "2026-09-05T06:11:48.000Z", "event": "Macro detected in invoice.pdf — C2 callback identified" },
+    { "time": "2026-09-05T06:14:00.000Z", "event": "AI threat assessment completed — CRITICAL" },
+    { "time": "2026-09-05T06:14:22.000Z", "event": "Case AE-042 created and assigned to S. Kapoor" }
+  ],
+  "notes": [
+    {
+      "author": "S. Kapoor",
+      "text": "Confirmed phishing campaign targeting finance team. Sender domain paypa1-secure.ru registered via Namecheap 2026-09-02. Will escalate to IR team.",
+      "createdAt": "2026-09-05T07:30:00.000Z"
+    }
+  ]
+}

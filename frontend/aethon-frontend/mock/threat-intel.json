@@ -1,0 +1,16 @@
+{
+  "query": "185.220.101.47",
+  "queryType": "ip",
+  "reputationScore": 92,
+  "verdict": "malicious",
+  "asn": "AS24940 Hetzner Online GmbH",
+  "country": "Russia",
+  "firstSeen": "2024-03-12T00:00:00.000Z",
+  "lastSeen": "2026-09-05T06:10:00.000Z",
+  "categories": ["phishing", "credential-harvesting", "botnet-c2"],
+  "relatedCases": [
+    { "caseId": "AE-042", "severity": "critical", "createdAt": "2026-09-05T06:14:22.000Z" },
+    { "caseId": "AE-031", "severity": "high", "createdAt": "2026-08-15T09:20:00.000Z" }
+  ],
+  "sources": ["AbuseIPDB", "VirusTotal", "Shodan", "ThreatFox"]
+}

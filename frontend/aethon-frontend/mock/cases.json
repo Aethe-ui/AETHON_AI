@@ -1,0 +1,82 @@
+[
+  {
+    "caseId": "AE-042",
+    "subject": "Urgent: Verify your PayPal account — action required",
+    "severity": "critical",
+    "status": "open",
+    "analyst": "S. Kapoor",
+    "createdAt": "2026-09-05T06:14:22.000Z",
+    "riskScore": 94,
+    "classification": "Credential Phishing"
+  },
+  {
+    "caseId": "AE-041",
+    "subject": "Your invoice from DocuSign is ready",
+    "severity": "high",
+    "status": "needs_review",
+    "analyst": "R. Mehta",
+    "createdAt": "2026-09-04T15:32:10.000Z",
+    "riskScore": 78,
+    "classification": "Malware Delivery"
+  },
+  {
+    "caseId": "AE-040",
+    "subject": "FW: Q3 Budget Review — Final",
+    "severity": "high",
+    "status": "confirmed",
+    "analyst": "S. Kapoor",
+    "createdAt": "2026-09-04T09:18:44.000Z",
+    "riskScore": 81,
+    "classification": "Business Email Compromise"
+  },
+  {
+    "caseId": "AE-039",
+    "subject": "Microsoft Security Alert — Unusual sign-in",
+    "severity": "medium",
+    "status": "open",
+    "analyst": null,
+    "createdAt": "2026-09-03T21:05:30.000Z",
+    "riskScore": 62,
+    "classification": "Credential Phishing"
+  },
+  {
+    "caseId": "AE-038",
+    "subject": "Shipping notification: Your package is on its way",
+    "severity": "high",
+    "status": "confirmed",
+    "analyst": "R. Mehta",
+    "createdAt": "2026-09-03T14:22:18.000Z",
+    "riskScore": 77,
+    "classification": "Malware Delivery"
+  },
+  {
+    "caseId": "AE-037",
+    "subject": "RE: Salary adjustment notice — HR Department",
+    "severity": "critical",
+    "status": "closed",
+    "analyst": "S. Kapoor",
+    "createdAt": "2026-09-02T11:45:55.000Z",
+    "riskScore": 91,
+    "classification": "Business Email Compromise"
+  },
+  {
+    "caseId": "AE-036",
+    "subject": "Your AWS account access has been restricted",
+    "severity": "medium",
+    "status": "closed",
+    "analyst": "A. Singh",
+    "createdAt": "2026-09-01T16:30:22.000Z",
+    "riskScore": 58,
+    "classification": "Credential Phishing"
+  },
+  {
+    "caseId": "AE-035",
+    "subject": "Important: Update your bank details immediately",
+    "severity": "low",
+    "status": "closed",
+    "analyst": "A. Singh",
+    "createdAt": "2026-08-31T08:12:00.000Z",
+    "riskScore": 34,
+    "classification": "Spam"
+  }
+]
