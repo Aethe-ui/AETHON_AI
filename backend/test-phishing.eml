@@ -1,0 +1,13 @@
+From: security@example.com
+To: victim@example.com
+Subject: Urgent Account Verification
+Date: Sat, 6 Sep 2026 10:00:00 +0530
+Message-ID: <test-phishing-001@example.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset="UTF-8"
+
+URGENT: Your account will be suspended today.
+
+Please verify your account immediately by providing your username and password.
+
+Failure to verify your credentials within 24 hours will result in permanent account suspension.

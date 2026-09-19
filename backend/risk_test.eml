@@ -1,0 +1,27 @@
+From: Microsoft Security <security-alert@secure-microsoft-verification.com>
+To: analyst@aethon.local
+Subject: URGENT: Your Microsoft Account Will Be Suspended
+Date: Mon, 7 Sep 2026 10:15:00 +0530
+Message-ID: <aethon-risk-test-20260907-001@secure-microsoft-verification.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+
+URGENT SECURITY ALERT
+
+We detected unusual activity on your Microsoft account.
+
+Your account will be suspended within 24 hours unless you verify your
+identity immediately.
+
+Verify your account here:
+http://192.168.1.50/login/verify?account=security&session=83921
+
+You can also confirm your credentials at:
+https://secure-login-microsoft-account.example.com/verify/password
+
+Please provide your password and authentication code when prompted.
+
+If you do not complete verification, access to your account and files may
+be permanently restricted.
+
+Microsoft Account Security Team

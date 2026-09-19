@@ -1,0 +1,33 @@
+From: Microsoft 365 Security <security@microsoft-security.example>
+To: analyst@example.com
+Reply-To: account-recovery@external-support.example
+Return-Path: <bounce@external-support.example>
+Received: from suspicious-mail.example (198.51.100.42)
+    by mail.example.com with ESMTP;
+    Mon, 7 Sep 2026 11:00:00 +0530
+Received: from unknown (203.0.113.77)
+    by suspicious-mail.example with ESMTP;
+    Mon, 7 Sep 2026 10:59:40 +0530
+Authentication-Results: mail.example.com;
+    spf=fail;
+    dkim=pass;
+    dmarc=fail
+Subject: URGENT: Microsoft 365 Account Verification Required
+Date: Mon, 7 Sep 2026 11:00:00 +0530
+Message-ID: <aethon-forensics-9c693e12-5bca-4346-a1a7-30b04377163b@aethon.test>
+MIME-Version: 1.0
+Content-Type: text/plain; charset="UTF-8"
+
+Dear User,
+
+We detected unusual activity on your Microsoft 365 account.
+
+Your account may be suspended unless you verify your credentials immediately.
+
+Please verify your account using the link below:
+
+http://198.51.100.42/login/verify?account=employee
+
+Failure to complete verification within 24 hours may result in restricted access.
+
+Microsoft 365 Security Team

@@ -1,0 +1,14 @@
+From: security@example.com
+To: victim@example.com
+Subject: Urgent Account Verification
+Message-ID: <aethon-url-d87d711c-6fdb-4923-9494-bf338accb808@example.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+MIME-Version: 1.0
+
+URGENT: Your account requires immediate verification.
+
+Please visit:
+http://192.168.1.50/login
+
+Contact security@example.com if you have questions.

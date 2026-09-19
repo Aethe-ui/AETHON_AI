@@ -1,0 +1,25 @@
+From: Microsoft Security <security@microsoft-security.example>
+Reply-To: account-recovery@external-support.example
+Return-Path: <bounce@external-support.example>
+To: employee@example.com
+Subject: URGENT: Microsoft Account Security Verification
+Date: Mon, 7 Sep 2026 11:30:00 +0530
+Message-ID: <aethon-forensics-e5fef263-5677-400e-bea5-7925a924d15e@forensic-test.example>
+MIME-Version: 1.0
+Authentication-Results: mail.example.com; spf=fail; dkim=fail; dmarc=fail
+Received: from suspicious-mail.example (198.51.100.42) by mail.example.com with ESMTP; Mon, 7 Sep 2026 11:29:50 +0530
+Received: from unknown (203.0.113.77) by suspicious-mail.example with ESMTP; Mon, 7 Sep 2026 11:29:40 +0530
+Content-Type: text/plain; charset="UTF-8"
+
+Dear User,
+
+We detected unusual activity on your Microsoft account.
+
+Your account will be suspended unless you verify your credentials immediately.
+Please complete the security verification using the link below:
+
+http://198.51.100.42/login/verify?account=employee&session=92741
+
+Failure to verify within 24 hours may result in restricted account access.
+
+Microsoft Security Team

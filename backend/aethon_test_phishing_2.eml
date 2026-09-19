@@ -1,0 +1,20 @@
+From: Security Alert <security-alert@secure-account-alert.example>
+To: employee@example.com
+Subject: URGENT: Account Verification Required
+Date: Mon, 7 Sep 2026 10:30:00 +0530
+Message-ID: <aethon-test-3c4eb0a7-0963-4867-a50e-9c2534a9e810@example.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset="UTF-8"
+
+Dear User,
+
+We detected unusual activity on your account.
+
+Your account will be suspended unless you verify your credentials immediately.
+Please complete the verification using the link below:
+
+http://192.168.1.50/login/verify?account=employee&session=84921
+
+If you do not verify within 24 hours, access to your account may be restricted.
+
+Security Team

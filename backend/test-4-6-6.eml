@@ -1,0 +1,19 @@
+From: Security Alert <security@microsoft-security.example>
+To: analyst@company.example
+Subject: Urgent Security Verification Required
+Date: Mon, 7 Sep 2026 11:29:50 +0530
+Message-ID: <aethon-466-test@example.com>
+Reply-To: account-recovery@external-support.example
+Return-Path: bounce@external-support.example
+Authentication-Results: microsoft-security.example; spf=fail; dkim=fail; dmarc=fail
+Received: from suspicious-mail.example (198.51.100.42) by mail.example.com with ESMTP; Mon, 7 Sep 2026 11:29:50 +0530
+Received: from unknown (203.0.113.77) by suspicious-mail.example with ESMTP; Mon, 7 Sep 2026 11:29:40 +0530
+Content-Type: text/plain; charset="UTF-8"
+
+URGENT: Your account requires immediate verification.
+
+Please verify your account using the link below:
+
+https://secure-login-example.com/verify?id=466
+
+Failure to verify your account may result in suspension.

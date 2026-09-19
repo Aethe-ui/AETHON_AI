@@ -1,0 +1,26 @@
+From: security@example.com
+To: victim@example.com
+Subject: Urgent Document
+Message-ID: <attachment-test-460c0f58-f410-4fc0-a6c5-c98764bbf4a9@example.com>
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="===============4347063702259566051=="
+
+--===============4347063702259566051==
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+
+URGENT: Please review the attached document immediately.
+
+Visit https://secure-login-example.com/verify
+
+Your account requires verification.
+
+--===============4347063702259566051==
+Content-Type: text/plain
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="test-attachment.txt"
+MIME-Version: 1.0
+
+VGhpcyBpcyBhIHRlc3QgYXR0YWNobWVudCBmb3IgQUVUSE9OIGZvcmVuc2ljIGFuYWx5c2lzLgo=
+
+--===============4347063702259566051==--
