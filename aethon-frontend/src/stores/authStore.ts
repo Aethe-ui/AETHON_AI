@@ -1,10 +1,17 @@
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 
+interface AuthUser {
+  id: string;
+  email: string;
+  name: string;
+  role: string;
+}
+
 interface AuthState {
   token: string | null;
-  user: { email: string; name: string; role: string } | null;
-  setAuth: (token: string, user: { email: string; name: string; role: string }) => void;
+  user: AuthUser | null;
+  setAuth: (token: string, user: AuthUser) => void;
   logout: () => void;
   isAuthenticated: () => boolean;
 }
@@ -14,13 +21,25 @@ export const useAuthStore = create<AuthState>()(
     (set, get) => ({
       token: null,
       user: null,
-      setAuth: (token, user) => set({ token, user }),
-      logout: () => set({ token: null, user: null }),
-      isAuthenticated: () => !!get().token,
+
+      setAuth: (token, user) =>
+        set({
+          token,
+          user,
+        }),
+
+      logout: () =>
+        set({
+          token: null,
+          user: null,
+        }),
+
+      isAuthenticated: () =>
+        !!get().token,
     }),
     {
       name: 'aethon-auth',
-      storage: createJSONStorage(() => sessionStorage), // §8.2: sessionStorage for security tools
-    }
-  )
+      storage: createJSONStorage(() => sessionStorage),
+    },
+  ),
 );

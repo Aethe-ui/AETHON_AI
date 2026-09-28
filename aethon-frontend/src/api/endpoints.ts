@@ -1,7 +1,7 @@
 // §8.1 — API endpoint constants aligned with the FastAPI backend
 export const ENDPOINTS = {
   // Auth
-  AUTH_LOGIN: '/auth/login',
+  AUTH_ME: '/auth/me',
 
   // Email Analysis
   EMAILS_ANALYZE: '/emails/analyze',

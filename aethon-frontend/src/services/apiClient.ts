@@ -9,25 +9,29 @@ const apiClient = axios.create({
   },
 });
 
-// Request interceptor: attach JWT token (§8.2)
 apiClient.interceptors.request.use((config) => {
   const token = useAuthStore.getState().token;
+
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   }
+
   return config;
 });
 
-// Response interceptor: handle 401 → logout & redirect (§8.2)
 apiClient.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response?.status === 401) {
       useAuthStore.getState().logout();
-      window.location.href = '/login';
+
+      if (window.location.pathname !== '/login') {
+        window.location.href = '/login';
+      }
     }
+
     return Promise.reject(error);
-  }
+  },
 );
 
 export default apiClient;

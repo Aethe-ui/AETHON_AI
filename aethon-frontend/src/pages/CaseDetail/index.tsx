@@ -6,13 +6,61 @@ import { Shield, Globe, Link2, Paperclip, CheckCircle, XCircle, MinusCircle, Map
 
 export default function CaseDetailPage() {
   const { caseId } = useParams<{ caseId: string }>();
-  const { data: caseData, isLoading } = useCase(caseId || '');
+
+  const {
+    data: caseData,
+    isLoading,
+    isError,
+    error,
+  } = useCase(caseId || '');
+
   const [notes, setNotes] = useState('');
 
-  if (isLoading || !caseData) {
+  if (isLoading) {
     return (
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '60vh', color: 'var(--text-muted)' }}>
+      <div
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          height: '60vh',
+          color: 'var(--text-muted)',
+        }}
+      >
         Loading case...
+      </div>
+    );
+  }
+
+  if (isError) {
+    return (
+      <div style={{ padding: 24 }}>
+        <h2
+          style={{
+            marginBottom: 8,
+            color: 'var(--risk-critical)',
+          }}
+        >
+          Failed to load investigation
+        </h2>
+
+        <pre
+          style={{
+            whiteSpace: 'pre-wrap',
+            fontSize: 12,
+            color: 'var(--text-muted)',
+          }}
+        >
+          {error instanceof Error ? error.message : String(error)}
+        </pre>
+      </div>
+    );
+  }
+
+  if (!caseData) {
+    return (
+      <div style={{ padding: 24 }}>
+        Investigation not found.
       </div>
     );
   }
@@ -74,23 +122,69 @@ export default function CaseDetailPage() {
             </div>
           </div>
           <div style={{ fontSize: 11, color: 'var(--text-muted)', marginTop: 4 }}>Risk score</div>
-          <div style={{ fontSize: 11, color: 'var(--text-muted)' }}>Confidence: {caseData.confidence}</div>
+          <div style={{ fontSize: 11, color: 'var(--text-muted)' }}> Confidence: {(caseData.confidence * 100).toFixed(1)}%</div>
         </div>
       </div>
 
       {/* AI Explanation */}
-      <div className="card" style={{ padding: 20, marginBottom: 16 }}>
-        <h2 style={{ fontSize: 14, fontWeight: 500, color: 'var(--text-secondary)', marginBottom: 14 }}>Why AETHON flagged this</h2>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-          {caseData.explanation.map((exp, i) => (
-            <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-              <div style={weightDot(exp.weight)} />
-              <span style={{ fontSize: 13, color: 'var(--text-primary)' }}>{exp.signal}</span>
-              <span style={{ fontSize: 11, color: 'var(--text-muted)', marginLeft: 'auto', textTransform: 'capitalize' }}>{exp.weight}</span>
-            </div>
-          ))}
+<div className="card" style={{ padding: 20, marginBottom: 16 }}>
+  <h2 style={{ fontSize: 14, fontWeight: 500, color: 'var(--text-secondary)', marginBottom: 14 }}>
+    Why AETHON flagged this
+  </h2>
+
+  {caseData.explanation.length > 0 ? (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+      {caseData.explanation.map((exp, i) => (
+        <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+          <div style={weightDot(exp.weight)} />
+          <span style={{ fontSize: 13, color: 'var(--text-primary)' }}>
+            {exp.signal}
+          </span>
+          <span
+            style={{
+              fontSize: 11,
+              color: 'var(--text-muted)',
+              marginLeft: 'auto',
+              textTransform: 'capitalize',
+            }}
+          >
+            {exp.weight}
+          </span>
         </div>
+      ))}
+    </div>
+  ) : (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+      <div style={{ fontSize: 13, color: 'var(--text-primary)' }}>
+        AETHON classified this email as{' '}
+        <strong>{caseData.classification}</strong>.
       </div>
+
+      <div style={{ fontSize: 13, color: 'var(--text-primary)' }}>
+        Risk score: <strong>{caseData.riskScore}/100</strong>
+      </div>
+
+      <div style={{ fontSize: 13, color: 'var(--text-primary)' }}>
+        ML confidence:{' '}
+        <strong>{(caseData.confidence * 100).toFixed(1)}%</strong>
+      </div>
+
+      {caseData.authentication.spf === 'fail' &&
+        caseData.authentication.dkim === 'fail' &&
+        caseData.authentication.dmarc === 'fail' && (
+          <div style={{ fontSize: 13, color: 'var(--text-primary)' }}>
+            SPF, DKIM and DMARC authentication checks all failed.
+          </div>
+        )}
+
+      {caseData.indicators.urls.length > 0 && (
+        <div style={{ fontSize: 13, color: 'var(--text-primary)' }}>
+          Suspicious URL indicators were detected in the email.
+        </div>
+      )}
+    </div>
+  )}
+</div>
 
       {/* Evidence Cards */}
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16, marginBottom: 16 }}>

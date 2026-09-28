@@ -1,24 +1,44 @@
-import apiClient from './apiClient';
-import { ENDPOINTS } from '@/api/endpoints';
+import { supabase } from '@/lib/supabase';
 import { useAuthStore } from '@/stores/authStore';
 
-const useMock = import.meta.env.VITE_USE_MOCK === 'true';
+export async function login(
+  email: string,
+  password: string,
+): Promise<void> {
+  const { data, error } = await supabase.auth.signInWithPassword({
+    email,
+    password,
+  });
 
-export async function login(email: string, password: string): Promise<void> {
-  if (useMock) {
-    // Mock login: any credentials work
-    await new Promise((r) => setTimeout(r, 500));
-    useAuthStore.getState().setAuth('mock-jwt-token-aethon', {
-      email,
-      name: 'Sarah Chen',
-      role: 'analyst',
-    });
-    return;
+  if (error) {
+    throw error;
   }
-  const { data } = await apiClient.post(ENDPOINTS.AUTH_LOGIN, { email, password });
-  useAuthStore.getState().setAuth(data.token, data.user);
+
+  if (!data.session || !data.user) {
+    throw new Error('Authentication session was not created.');
+  }
+
+  const user = data.user;
+
+  useAuthStore.getState().setAuth(
+    data.session.access_token,
+    {
+      id: user.id,
+      email: user.email ?? email,
+      name:
+        user.user_metadata?.full_name ??
+        user.user_metadata?.name ??
+        user.email ??
+        email,
+      role:
+        user.user_metadata?.role ??
+        'analyst',
+    },
+  );
 }
 
-export function logout(): void {
+export async function logout(): Promise<void> {
+  await supabase.auth.signOut();
+
   useAuthStore.getState().logout();
 }

@@ -22,7 +22,7 @@ from app.services.risk_engine import calculate_case_risk
 from app.services.url_analyzer import analyze_url_risk
 from app.services.header_forensics import analyze_header_forensics
 from app.services.header_risk import calculate_header_risk
-from app.services.received_chain import analyze_received_chain
+
 router = APIRouter(
     prefix="/api/emails",
     tags=["Emails"],
@@ -98,6 +98,25 @@ async def analyze_email(
     # 6. Create investigation case
     # ---------------------------------------------------------
 
+    existing_email = (
+    supabase
+    .table("emails")
+    .select("id, case_id")
+    .eq("message_id", parsed["message_id"])
+    .maybe_single()
+    .execute()
+)
+
+    if existing_email and existing_email.data:
+        raise HTTPException(
+            status_code=409,
+            detail={
+                "message": "Email with this Message-ID has already been analyzed.",
+                "message_id": parsed["message_id"],
+                "case_id": existing_email.data["case_id"],
+            },
+        )
+
     case_response = (
         supabase
         .table("cases")
@@ -147,28 +166,28 @@ async def analyze_email(
             detail=f"Failed to store raw email evidence: {exc}",
         )
 
-    # ---------------------------------------------------------
-    # 8. Store email metadata + ML result
-    # ---------------------------------------------------------
+   # ---------------------------------------------------------
+# 8. Store email metadata + ML result
+# ---------------------------------------------------------
 
     email_response = (
         supabase
         .table("emails")
         .insert(
-            {
-                "case_id": case_id,
-                "message_id": parsed["message_id"],
-                "subject": parsed["subject"],
-                "sender": parsed["sender"],
-                "recipients": parsed["recipients"],
-                "is_malicious": ml_result["is_malicious"],
-                "ml_confidence": ml_result["confidence"],
-                "raw_email_path": storage_path,
-                "raw_email_hash": file_hash,
-            }
-        )
-        .execute()
-    )
+                {
+                    "case_id": case_id,
+                    "message_id": parsed["message_id"],
+                    "subject": parsed["subject"],
+                    "sender": parsed["sender"],
+                    "recipients": parsed["recipients"],
+                    "is_malicious": ml_result["is_malicious"],
+                    "ml_confidence": ml_result["confidence"],
+                    "raw_email_path": storage_path,
+                    "raw_email_hash": file_hash,
+                }
+        )       
+    .execute()
+    )   
 
     if not email_response.data:
         raise HTTPException(
@@ -193,12 +212,11 @@ async def analyze_email(
     headers=parsed["headers"],
     )
 
-    received_chain_analysis = analyze_received_chain(header_forensics["received_chain"])
-
     header_risk = calculate_header_risk(
     header_forensics
     )
     
+    received_chain_analysis = header_forensics["received_chain_analysis"]
 
     # ---------------------------------------------------------
     # 10. Analyze extracted URLs
@@ -243,25 +261,24 @@ async def analyze_email(
     indicator_rows = []
 
     # URLs
-    for url in ioc_result["urls"]:
-
-        url_risk = analyze_url_risk(url)
-
-        indicator_rows.append(
-            {
-                "case_id": case_id,
-                "email_id": email_id,
-                "type": "url",
-                "value": url,
-                "reputation": "unknown",
-                "source": "aethon_url_analyzer",
-                "confidence": 0.0,
-                "risk_score": url_risk["risk_score"],
-                "risk_level": url_risk["risk_level"],
-                "risk_signals": url_risk["signals"],
-            }
-        )
-
+    for url, url_risk in zip(
+    ioc_result["urls"],
+    url_results,
+    ):
+       indicator_rows.append(
+        {
+            "case_id": case_id,
+            "email_id": email_id,
+            "type": "url",
+            "value": url,
+            "reputation": "unknown",
+            "source": "aethon_url_analyzer",
+            "confidence": 0.0,
+            "risk_score": url_risk["risk_score"],
+            "risk_level": url_risk["risk_level"],
+            "risk_signals": url_risk["signals"],
+        }
+       )
     # Domains
     for domain in ioc_result["domains"]:
 

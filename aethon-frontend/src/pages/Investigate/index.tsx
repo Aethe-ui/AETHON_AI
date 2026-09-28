@@ -31,44 +31,51 @@ export default function InvestigatePage() {
   const [progress, setProgress] = useState(0);
   const [dragOver, setDragOver] = useState(false);
 
-  const simulatePipeline = useCallback(async () => {
+  
+const handleSubmit = async () => {
+  if (mode === 'upload' && !file) return;
+  if (mode === 'paste' && !pasteContent.trim()) return;
+
+  try {
+    const formData = new FormData();
+
+    if (mode === 'upload' && file) {
+      formData.append('email', file);
+    } else {
+      formData.append('rawEmail', pasteContent);
+    }
+
     setAnalyzing(true);
-    setCaseId('AE-043');
+    setProgress(5);
 
-    for (let i = 0; i < initialSteps.length; i++) {
-      setSteps((prev) =>
-        prev.map((s, idx) => ({
-          ...s,
-          status: idx < i ? 'done' : idx === i ? 'running' : 'pending',
-        }))
-      );
-      setProgress(Math.round(((i + 0.5) / initialSteps.length) * 100));
-      await new Promise((r) => setTimeout(r, 1200 + Math.random() * 800));
-    }
+    const result = await analyzeEmail(formData);
 
-    setSteps((prev) => prev.map((s) => ({ ...s, status: 'done' as StepStatus })));
+    const realCaseId = result.caseId;
+
+    setCaseId(realCaseId);
     setProgress(100);
-    await new Promise((r) => setTimeout(r, 500));
-    navigate('/cases/AE-042');
-  }, [navigate]);
 
-  const handleSubmit = async () => {
-    if (mode === 'upload' && !file) return;
-    if (mode === 'paste' && !pasteContent.trim()) return;
+    setSteps((prev) =>
+      prev.map((step) => ({
+        ...step,
+        status: 'done',
+      }))
+    );
 
-    try {
-      const formData = new FormData();
-      if (mode === 'upload' && file) {
-        formData.append('file', file);
-      } else {
-        formData.append('raw_email', pasteContent);
-      }
-      simulatePipeline();
-      await analyzeEmail(formData);
-    } catch {
-      // Pipeline simulation handles the flow
-    }
-  };
+    await new Promise((resolve) => setTimeout(resolve, 500));
+
+    navigate(`/cases/${realCaseId}`);
+  } catch (error) {
+    console.error('Email analysis failed:', error);
+
+    setAnalyzing(false);
+    setProgress(0);
+
+    setSteps(initialSteps);
+
+    alert('Email analysis failed. Please check the backend logs.');
+  }
+};
 
   const handleDrop = useCallback((e: React.DragEvent) => {
     e.preventDefault();

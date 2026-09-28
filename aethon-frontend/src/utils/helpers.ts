@@ -20,7 +20,7 @@ export function severityChipClass(severity: CaseSeverity): string {
 export function statusChipClass(status: CaseStatus): string {
   const map: Record<CaseStatus, string> = {
     open: 'chip chip-open',
-    needs_review: 'chip chip-needs-review',
+    investigating: 'chip chip-open',
     confirmed: 'chip chip-confirmed',
     closed: 'chip chip-closed',
   };
@@ -36,7 +36,7 @@ export function severityBorderClass(severity: CaseSeverity): string {
 export function formatStatus(status: CaseStatus): string {
   const map: Record<CaseStatus, string> = {
     open: 'Open',
-    needs_review: 'Needs review',
+    investigating: 'investigating',
     confirmed: 'Confirmed',
     closed: 'Closed',
   };

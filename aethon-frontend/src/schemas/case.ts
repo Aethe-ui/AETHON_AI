@@ -5,7 +5,7 @@ import { z } from 'zod';
 export const CaseSeverity = z.enum(['low', 'medium', 'high', 'critical']);
 export type CaseSeverity = z.infer<typeof CaseSeverity>;
 
-export const CaseStatus = z.enum(['open', 'needs_review', 'confirmed', 'closed']);
+export const CaseStatus = z.enum(['open', 'investigating', 'confirmed', 'closed']);
 export type CaseStatus = z.infer<typeof CaseStatus>;
 
 export const GeoSchema = z.object({
@@ -48,7 +48,7 @@ export const CaseSchema = z.object({
   riskScore: z.number().min(0).max(100),
   confidence: z.number().min(0).max(1),
   classification: z.string(),
-  createdAt: z.string().datetime(),
+  createdAt: z.string().datetime({ offset: true }),
   analyst: z.string().nullable(),
   explanation: z.array(ExplanationSignal),
   authentication: AuthenticationResult,
