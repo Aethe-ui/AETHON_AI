@@ -7,7 +7,7 @@ import { Mail, Lock, Eye, EyeOff, Shield, UserRound } from 'lucide-react';
 import { login, loginWithGoogle, register, syncAuthSession } from '@/services/authService';
 
 const authSchema = z.object({
-  name: z.string().min(2, 'Name must be at least 2 characters').optional(),
+  name: z.string().refine((value) => value === '' || value.length >= 2, 'Name must be at least 2 characters'),
   email: z.string().email('Enter a valid email address'),
   password: z.string().min(8, 'Password must be at least 8 characters'),
 });
