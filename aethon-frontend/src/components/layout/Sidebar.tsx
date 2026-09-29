@@ -10,6 +10,7 @@ import {
 } from 'lucide-react';
 import { useUIStore } from '@/stores/uiStore';
 import { useAuthStore } from '@/stores/authStore';
+import { logout as logoutUser } from '@/services/authService';
 import { useNavigate } from 'react-router-dom';
 
 const navItems = [
@@ -23,12 +24,17 @@ const navItems = [
 
 export default function Sidebar() {
   const collapsed = useUIStore((s) => s.sidebarCollapsed);
-  const logout = useAuthStore((s) => s.logout);
   const navigate = useNavigate();
 
-  const handleLogout = () => {
-    logout();
-    navigate('/login');
+  const handleLogout = async () => {
+    try {
+      await logoutUser();
+    } catch (error) {
+      console.error('Logout failed:', error);
+      useAuthStore.getState().logout();
+    } finally {
+      navigate('/login', { replace: true });
+    }
   };
 
   return (

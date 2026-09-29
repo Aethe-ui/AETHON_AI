@@ -89,7 +89,13 @@ export async function syncAuthSession(): Promise<boolean> {
 }
 
 export async function logout(): Promise<void> {
-  await supabase.auth.signOut();
+  try {
+    const { error } = await supabase.auth.signOut();
 
-  useAuthStore.getState().logout();
+    if (error) {
+      console.error('Supabase logout failed:', error);
+    }
+  } finally {
+    useAuthStore.getState().logout();
+  }
 }
