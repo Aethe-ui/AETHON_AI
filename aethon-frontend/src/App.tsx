@@ -28,6 +28,7 @@ export default function App() {
         <Routes>
           {/* Public route */}
           <Route path="/login" element={<LoginPage />} />
+          <Route path="/register" element={<LoginPage />} />
 
           {/* Protected routes — all inside AppShell */}
           <Route element={<ProtectedRoute />}>
